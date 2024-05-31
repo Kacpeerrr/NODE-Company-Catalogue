@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-mongoose.connect('mongodb://localhost:27017/node-kurs')
+const {checkForbidenString} = require('../validators')
 
 const companySchema = new Schema({
 	slug: {
@@ -14,6 +14,7 @@ const companySchema = new Schema({
 			}
 		},
 		trim: true,
+		lowercase: true,
 	},
 	name: {
 		type: String,
@@ -26,23 +27,6 @@ const companySchema = new Schema({
 	},
 })
 
-companySchema.path('slug').set(value => value.toLowerCase())
-
 const Company = mongoose.model('Company', companySchema)
 
-async function main() {
-	const company = new Company({
-		name: 'Probox',
-		slug: '   ProBox',
-		employeesCount: 1,
-	})
-
-	try {
-		await company.save()
-	} catch (e) {
-		console.log('Coś poszło nie tak...')
-		for (const key in e.errors) console.log(e.errors[key].message)
-	}
-}
-
-main()
+module.exports = Company
