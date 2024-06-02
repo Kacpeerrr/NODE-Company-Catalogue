@@ -5,6 +5,7 @@ const app = express()
 
 require('./db/mongoose')
 
+//view engine
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname + '/../views'))
 //set layout
@@ -19,7 +20,7 @@ app.use(express.urlencoded({ extended: true }))
 //middleware
 app.use('/', require('./middleware/view-variables'))
 
-//mount routes - montujemy routingi
+//mount routes
 app.use(require('./routes/web'))
 
 module.exports = app
