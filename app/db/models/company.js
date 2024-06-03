@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const {checkForbidenString} = require('../validators')
+const { checkForbidenString } = require('../validators')
 
 const companySchema = new Schema({
 	slug: {
@@ -24,6 +24,12 @@ const companySchema = new Schema({
 		type: Number,
 		min: 1,
 		default: 1,
+	},
+	
+	user: {
+		type: mongoose.Types.ObjectId,
+		required: true,
+		ref: 'User',
 	},
 })
 

@@ -16,6 +16,24 @@
                 <li class="nav-item">
                     <a class="nav-link url.uncludes('/firmy') ? 'active' : '' %>" href="/firmy">Firmy</a>
                 </li>
+
+                <% if (!user) { %>
+                    <li class="nav-item">
+                        <a class="nav-link url.uncludes('/zarejestruj') ? 'active' : '' %>"
+                            href="/zarejestruj">Rejestracja</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link url.uncludes('/zaloguj') ? 'active' : '' %>" href="/zaloguj">Zaloguj</a>
+                    </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link url.uncludes('/zaloguj') ? 'active' : '' %>"
+                                href="/admin/profil">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/wyloguj">Wyloguj</a>
+                        </li>
+                        <% } %>
             </ul>
         </div>
     </div>

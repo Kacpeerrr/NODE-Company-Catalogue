@@ -22,6 +22,7 @@
         search.set('page', e.target.dataset.page)
         const url = window.location.origin + window.location.pathname + '?' + search.toString()
         window.location.href = url
+
     }
 
     document.querySelectorAll('.pagination a').forEach(a => {
