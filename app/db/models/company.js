@@ -31,6 +31,9 @@ const companySchema = new Schema({
 		required: true,
 		ref: 'User',
 	},
+	image: {
+		type: String
+	}
 })
 
 const Company = mongoose.model('Company', companySchema)

@@ -20,7 +20,6 @@ app.use(
 
 //view engine
 app.set('view engine', 'ejs')
-//Poprawienie ścieżki!
 app.set('views', path.join(__dirname + '/../views'))
 //set layout
 app.use(ejsLayouts)
@@ -30,6 +29,7 @@ app.use(express.static('public'))
 
 //body parser
 app.use(express.urlencoded({ extended: true }))
+//cookie parser
 app.use(cookieParser())
 
 //middleware

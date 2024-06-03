@@ -1,4 +1,6 @@
 const Company = require('../db/models/company')
+const fs = require('fs')
+const { Parser } = require('json2csv')
 
 class CompanyController {
 	async showCompanies(req, res) {
@@ -93,6 +95,13 @@ class CompanyController {
 		company.slug = req.body.slug
 		company.employeesCount = req.body.employeesCount
 
+		if (req.file.filename && company.image) {
+			fs.unlinkSync('public/uploads/' + company.image)
+		}
+
+		if (req.file.filename) {
+			company.image = req.file.filename
+		}
 		try {
 			await company.save()
 			res.redirect('/firmy')
@@ -107,12 +116,57 @@ class CompanyController {
 	async deleteCompany(req, res) {
 		const { name } = req.params
 		try {
+			const company = await Company.findOne({ slug: name })
+			if (company.image) {
+				fs.unlinkSync('public/uploads/' + company.image)
+			}
 			await Company.deleteOne({ slug: name })
 			res.redirect('/firmy')
 		} catch (e) {
 			//
 		}
 	}
+
+	async deleteImage(req, res) {
+		const { name } = req.params
+		const company = await Company.findOne({ slug: name })
+		try {
+			fs.unlinkSync('public/uploads/' + company.image)
+			company.image = ''
+			await company.save()
+			res.redirect('/firmy')
+		} catch (e) {
+			//
+		}
+	}
+
+	//Metoda, która generuje CSV
+	async getCSV(req, res) {
+		//Podajemy pola jakie chcemy mieć w pliku CSV. Nazwa taka jak w bazie danych
+		const fields = [
+		{
+			label: 'Nazwa',
+			value: 'name',
+		},
+		{
+			label: 'URL',
+			value: 'slug',
+		},
+		{
+			label: 'Liczba pracowników',
+			value: 'employeesCount'
+		}	
+	]
+
+	const data = await Company.find()
+	const fileName = 'companies.csv'
+	const json2csv = new Parser({ fields })
+	const csv = json2csv.parse(data)
+
+	res.header('Content-Type', 'text/csv')
+	res.attachment(fileName)
+	res.send(csv)
+}
 }
 
 module.exports = new CompanyController()
