@@ -29,15 +29,15 @@ app.use(express.static('public'))
 
 //body parser
 app.use(express.urlencoded({ extended: true }))
-//cookie parser
 app.use(cookieParser())
+app.use(express.json())
 
 //middleware
 app.use('/', require('./middleware/view-variables-middleware'))
 app.use('/', require('./middleware/user-middleware'))
 app.use('/admin', require('./middleware/is-auth-middleware'))
 
-//mount routes
+app.use('/api', require('./routes/api'))
 app.use(require('./routes/web'))
 
 module.exports = app

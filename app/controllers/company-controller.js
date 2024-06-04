@@ -1,5 +1,6 @@
 const Company = require('../db/models/company')
 const fs = require('fs')
+//Pobieramy json2csv
 const { Parser } = require('json2csv')
 
 class CompanyController {
@@ -42,7 +43,7 @@ class CompanyController {
 			companies,
 			page,
 			pagesCount,
-			resultsCount,
+			resultsCount
 		})
 	}
 
@@ -53,7 +54,7 @@ class CompanyController {
 
 		res.render('pages/companies/company', {
 			name: company?.name,
-			title: company?.name ?? 'Brak wyników',
+			title: company?.name ?? 'Brak wyników'
 		})
 	}
 
@@ -75,7 +76,7 @@ class CompanyController {
 		} catch (e) {
 			res.render('pages/companies/create', {
 				errors: e.errors,
-				form: req.body,
+				form: req.body
 			})
 		}
 	}
@@ -84,7 +85,7 @@ class CompanyController {
 		const { name } = req.params
 		const company = await Company.findOne({ slug: name })
 		res.render('pages/companies/edit', {
-			form: company,
+			form: company
 		})
 	}
 
@@ -108,7 +109,7 @@ class CompanyController {
 		} catch (e) {
 			res.render('pages/companies/edit', {
 				errors: e.errors,
-				form: req.body,
+				form: req.body
 			})
 		}
 	}
@@ -140,17 +141,15 @@ class CompanyController {
 		}
 	}
 
-	//Metoda, która generuje CSV
 	async getCSV(req, res) {
-		//Podajemy pola jakie chcemy mieć w pliku CSV. Nazwa taka jak w bazie danych
 		const fields = [
 		{
 			label: 'Nazwa',
-			value: 'name',
+			value: 'name'
 		},
 		{
 			label: 'URL',
-			value: 'slug',
+			value: 'slug'
 		},
 		{
 			label: 'Liczba pracowników',

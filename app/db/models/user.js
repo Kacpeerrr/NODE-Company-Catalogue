@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
 const { validateEmail } = require('../validators')
+const randomstring = require("randomstring")
 
 const userSchema = new Schema({
 	email: {
@@ -21,6 +22,9 @@ const userSchema = new Schema({
 		type: String,
 	},
 	lastName: {
+		type: String,
+	},
+	apiToken: {
 		type: String,
 	}
 })
@@ -42,6 +46,14 @@ userSchema.post('save', function (error, doc, next) {
 		error.errors = { email: { message: 'Taki email jest już zajęty' } }
 	}
 	next(error)
+})
+
+userSchema.pre('save', function(next){
+	const user = this
+	if(user.isNew) {
+	user.apiToken = randomstring.generate(30)
+	}
+	next()
 })
 
 

@@ -5,7 +5,7 @@
     <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input type="email" class="form-control <%- errors?.email ? 'is-invalid' : '' %>" name="email"
-            value="<%- form.email %>" id="email" required>
+            value="<%= form.email %>" id="email" required>
         <% if (errors?.email) { %>
             <div class="invalid-feedback">
                 <%= errors.email.message %>
