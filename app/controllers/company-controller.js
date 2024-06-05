@@ -1,6 +1,5 @@
 const Company = require('../db/models/company')
 const fs = require('fs')
-//Pobieramy json2csv
 const { Parser } = require('json2csv')
 
 class CompanyController {
@@ -43,7 +42,7 @@ class CompanyController {
 			companies,
 			page,
 			pagesCount,
-			resultsCount
+			resultsCount,
 		})
 	}
 
@@ -54,7 +53,7 @@ class CompanyController {
 
 		res.render('pages/companies/company', {
 			name: company?.name,
-			title: company?.name ?? 'Brak wyników'
+			title: company?.name ?? 'Brak wyników',
 		})
 	}
 
@@ -145,11 +144,11 @@ class CompanyController {
 		const fields = [
 		{
 			label: 'Nazwa',
-			value: 'name'
+			value: 'name',
 		},
 		{
 			label: 'URL',
-			value: 'slug'
+			value: 'slug',
 		},
 		{
 			label: 'Liczba pracowników',

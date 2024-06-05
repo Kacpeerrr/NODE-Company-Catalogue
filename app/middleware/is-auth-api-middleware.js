@@ -11,7 +11,6 @@ module.exports = async function (req, res, next) {
         if(!user) {
 		res.status(403).json({ message: 'Dostęp zabroniony' })
         }
-
         req.user = user
 	next()
 }

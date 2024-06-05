@@ -13,6 +13,7 @@ class UserController {
 			if (!isValidPassword) {
 				throw new Error('Password not valid')
 			}
+
 			res.status(200).json({ apiToken: user.apiToken })
 		} catch (e) {
 			res.sendStatus(401)
@@ -20,5 +21,4 @@ class UserController {
 	}
 }
 
-//Eksportujemy
 module.exports = new UserController()

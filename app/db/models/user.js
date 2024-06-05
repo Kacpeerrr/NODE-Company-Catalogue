@@ -65,7 +65,7 @@ userSchema.methods = {
 
 userSchema.virtual('fullName').get(function(){
 	if(this.firstName && this.lastName){
-	return `${this.firstName} ${this.lastName[0]}.`;
+	return `${this.firstName || ''} ${this.lastName && this.lastName[0] || ''}.`;
 	}
 })
 

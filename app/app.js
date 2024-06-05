@@ -5,8 +5,22 @@ const app = express()
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const { sessionKeySecret } = require('./config')
+const helmet = require('helmet')
+const rateLimiterMiddleware = require('./middleware/rate-limiter-middleware')
 
 require('./db/mongoose')
+
+app.use(helmet({
+	contentSecurityPolicy: {
+		directives: {
+			defaultSrc: ["'self'"],
+			scriptSrc: ["'self'", "cdn.jsdelivr.net"],
+			styleSrc: ["'self'", "cdn.jsdelivr.net"]
+		}
+	}
+}))
+
+app.use(rateLimiterMiddleware)
 
 //session
 app.use(
